@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en-US" class="hide-scroll">
+
+<head>
+    <title>Cacto Editora</title>
+    <meta name="Editora">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Assistant:200,400,700|Rajdhani:300,400,700');
+
+        body {
+            font-family: 'Assistant', sans-serif;
+            font-weight: 400;
+            background: #fff;
+        }
+
+        h1 {
+            font-size: 4em;
+            text-align: center;
+            margin-bottom: 10px;
+            padding: 0;
+            font-weight: 200;
+        }
+
+        h2 {
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 10px;
+            padding: 0;
+        }
+
+        .logo-text {
+            font-weight: 200;
+            font-size: 20px;
+            color: #c6c6c6 !important;
+            display: inline-block;
+            text-decoration: none;
+            margin-left: 40px;
+            transition: all .25s;
+            margin-right: 40px;
+            padding: 22.5px 0px;
+        }
+
+        .logo-text:hover {
+            color: #272727 !important;
+        }
+
+        nav {
+            display: block;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            transition: all .25s;
+            background: #fff;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+        }
+
+        nav ul li:first-of-type {
+            float: left;
+        }
+
+        nav ul li {
+            float: right;
+        }
+
+        nav ul a {
+            text-decoration: none;
+
+            color: #a5a5a5;
+            font-size: 24px;
+            transition: all .25s;
+            float: right;
+            padding: 20px 40px;
+        }
+
+        nav ul a:hover {
+            color: #272727;
+        }
+
+
+        .page-section {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            resize: vertical;
+            overflow: auto;
+        }
+
+        .page-section p {
+            width: 30%;
+            margin: 0 auto;
+            text-align: center
+        }
+
+        .white-text {
+            color: #fff;
+        }
+
+        .the-shadow-noes-all {
+
+            box-shadow: 0 3px 52px 10px rgba(0, 0, 0, .05)
+        }
+
+        #about {
+            background: #f1f1f1;
+        }
+
+        #work {
+            background: #ccc;
+        }
+
+        #contact {
+            background: #323232;
+        }
+
+        .nav-active {
+            color: #272727;
+        }
+    </style>
+
+    <script>
+        //smooth scroll credit: https://css-tricks.com/snippets/jquery/smooth-scrolling/
+
+        // highlighting credit: http://callmenick.com/post/single-page-site-with-smooth-scrolling-highlighted-link-and-fixed-navigation
+
+        $(document).ready(function () {
+
+            $('a[href*="#"]:not([href="#"])').click(function () {
+                if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location
+                    .hostname == this.hostname) {
+                    var target = $(this.hash);
+                    target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                    if (target.length) {
+                        //$('nav a').removeClass('nav-active');
+                        // $(this).addClass('nav-active');
+                        $('html, body').animate({
+                            scrollTop: target.offset().top
+                        }, 250);
+
+                        return false;
+                    }
+                }
+            });
+
+
+            /**
+             * This part handles the highlighting functionality.
+             * We use the scroll functionality again, some array creation and 
+             * manipulation, class adding and class removing, and conditional testing
+             */
+            var aChildren = $("nav li").children(); // find the a children of the list items
+            var aArray = []; // create the empty aArray
+            for (var i = 0; i < aChildren.length; i++) {
+                var aChild = aChildren[i];
+                var ahref = $(aChild).attr('href');
+                aArray.push(ahref);
+            } // this for loop fills the aArray with attribute href values
+
+            $(window).scroll(function () {
+                var windowPos = $(window)
+            .scrollTop(); // get the offset of the window from the top of page
+                var windowHeight = $(window).height(); // get the height of the window
+                var docHeight = $(document).height();
+
+                for (var i = 0; i < aArray.length; i++) {
+                    var theID = aArray[i];
+                    var divPos = $(theID).offset()
+                    .top; // get the offset of the div from the top of page
+                    var divHeight = $(theID).height(); // get the height of the div in question
+                    if (windowPos >= divPos && windowPos < (divPos + divHeight)) {
+                        $("a[href='" + theID + "']").addClass("nav-active");
+                    } else {
+                        $("a[href='" + theID + "']").removeClass("nav-active");
+                    }
+                }
+
+                if (windowPos + windowHeight == docHeight) {
+                    if (!$("nav li:last-child a").hasClass("nav-active")) {
+                        var navActiveCurrent = $(".nav-active").attr("href");
+                        $("a[href='" + navActiveCurrent + "']").removeClass("nav-active");
+                        $("nav li:last-child a").addClass("nav-active");
+                    }
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <nav>
+
+        <ul>
+            <li><a href="#about" class="logo-text">cactoeditora.pt</a></li>
+            <li><a href="#contact">Contacto</a></li>
+            <li><a href="#work">Publicações</a></li>
+            <li><a class="nav-active" href="#about">Sobre</a></li>
+        </ul>
+    </nav>
+
+
+    <div class="page-section" id="about">
+        <H1>Cacto Editora</h1>
+        <p>Livros como punhos</p>
+    </div>
+
+    <div class="page-section" id="work">
+        <H1>Publicações</h1>
+        <p>Em breve</p>
+    </div>
+
+    <div class="page-section" id="contact">
+        <H1 class="white-text">Contacto</h1>
+        <p class="white-text">geral@cactoeditora.pt</p>
+    </div>
+</body>
+
+</html>
